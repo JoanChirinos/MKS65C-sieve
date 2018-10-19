@@ -5,7 +5,7 @@ run:
 	./a.out $(args)
 
 clean:
-	-rm -f /a.out
+	-rm -f /a.out *.o
 
 driver.o:
 	gcc -c driver.c

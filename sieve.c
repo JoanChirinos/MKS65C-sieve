@@ -4,13 +4,14 @@
 
 #include "sieve.h"
 
-//odds only
+// average of 0.236 s on Stuy computer for 2,000,000th prime
+
+// odds only
 int sieve(int n) {
   if (n == 1) {
     return 2;
   }
 
-  // skipping 2
   n--;
 
   float c = (n < 5000) ? 1.3 : 1.15; // constant for next step
@@ -26,7 +27,7 @@ int sieve(int n) {
   // using this so we don't have to count from the beginning
   // interesting --> this doesn't make it faster...
   int pcounter = 0;
-  char* current_prime = NULL;
+  char* current_prime = nums;
 
   // starting at index 0
   int i_at = 0;
@@ -44,23 +45,25 @@ int sieve(int n) {
         if (!(*(x))) *x = 1;
       }
     }
-
-    // else index is pcounter-th prime
-    else {
-      pcounter++;
-      current_prime = nums + i_at;
-    }
   }
 
-  n -= pcounter;
+  char* onums = nums;
 
-  for ( ; n > 0; n--) {
-    while (*current_prime != 0) {
-      current_prime += 1;
+  for ( ; n >= -1; n--) {
+    //printf("%d\n", nums);
+    while (*nums != 0) {
+      nums += 1;
     }
-    current_prime += 1;
+    nums += 1;
   }
+  nums -= 1;
 
-  free(nums);
-  return 2 * ((current_prime - nums) + 1) + 1;
+  // char* r = nums;
+  // int w;
+  // for(w = 0; w < max_index; w++) {
+  //   printf("%d: %d\n", w, *(r + w));
+  // }
+
+  free(onums);
+  return 2 * ((nums - onums) - 1) + 1;
 }
